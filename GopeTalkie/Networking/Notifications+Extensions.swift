@@ -1,0 +1,12 @@
+//
+//  Notifications+Extensions.swift
+//  GopeTalkie
+//
+//  Created by Gopenux on 15/07/25.
+//
+
+import Foundation
+
+extension Notification.Name {
+    static let tokenExpired = Notification.Name("TokenExpiredNotification")
+}
