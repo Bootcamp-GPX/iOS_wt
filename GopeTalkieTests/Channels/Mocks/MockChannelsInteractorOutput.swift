@@ -5,7 +5,7 @@
 //  Created by Gopenux on 25/07/25.
 //
 
-import UIKit
+import XCTest
 @testable import GopeTalkie
 
 final class MockChannelsInteractorOutput: ChannelsInteractorOutput {
