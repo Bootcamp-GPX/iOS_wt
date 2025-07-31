@@ -9,13 +9,21 @@ import XCTest
 @testable import GopeTalkie
 
 final class MockChannelRouter: ChannelRouterProtocol {
+    var presentModalCalled = false
+    var lastMessage: String?
     var navigateCalled = false
 
-    static func createModule(with channel: GopeTalkie.Channel) -> UIViewController {
+    static func createModule(with channel: GopeTalkie.Channel?) -> UIViewController {
         return UIViewController()
     }
-    
-    func navigateToChannels(from view: ChannelViewProtocol) {
-        navigateCalled = true
+        
+    func presentChannelsModally(from view: ChannelViewProtocol) {
+        presentModalCalled = true
     }
+
+    func navigateToLogin(with message: String) {
+        navigateCalled = true
+        lastMessage = message
+    }
+
 }
