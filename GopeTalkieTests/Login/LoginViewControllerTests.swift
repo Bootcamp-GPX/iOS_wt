@@ -8,7 +8,7 @@
 import XCTest
 @testable import GopeTalkie
 
-final class LoginFunctionalTests: XCTestCase {
+final class LoginViewControllerTests: XCTestCase {
     var viewController: LoginViewController!
     var mockPresenter: MockLoginPresenter!
 
