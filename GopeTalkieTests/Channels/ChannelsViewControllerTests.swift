@@ -8,7 +8,7 @@
 import XCTest
 @testable import GopeTalkie
 
-final class ChannelsFunctionalTests: XCTestCase {
+final class ChannelsViewControllerTests: XCTestCase {
     var viewController: ChannelsViewController!
     var mockPresenter: MockChannelsPresenter!
 
