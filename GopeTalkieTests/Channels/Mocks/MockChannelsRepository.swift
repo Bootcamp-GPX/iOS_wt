@@ -9,10 +9,10 @@ import XCTest
 @testable import GopeTalkie
 
 final class MockChannelsRepository: ChannelsRepositoryProtocol {
-    var stubbedResult: Result<[Channel], Error>?
+    var resultToReturn: Result<[Channel], Error>?
 
     func fetchChannels(completion: @escaping (Result<[Channel], Error>) -> Void) {
-        if let result = stubbedResult {
+        if let result = resultToReturn {
             completion(result)
         }
     }
