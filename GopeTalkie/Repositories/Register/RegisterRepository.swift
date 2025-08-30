@@ -1,41 +1,41 @@
 //
-//  LoginRepository.swift
+//  RegisterRepository.swift
 //  GopeTalkie
 //
-//  Created by Gopenux on 15/07/25.
+//  Created by Gopenux on 16/07/25.
 //
 
 import Foundation
 
-protocol LoginRepositoryProtocol {
-    func login(request: LoginRequest, completion: @escaping (Result<LoginResponse, Error>) -> Void)
-}
-
-final class LoginRepository: LoginRepositoryProtocol {
+final class RegisterRepository: RegisterRepositoryProtocol {
     private let session: URLSession
+    private let encoder = NetworkService.shared.encoder
+    private let decoder = NetworkService.shared.decoder
     
     init(session: URLSession = .shared) {
         self.session = session
     }
     
-    func login(request: LoginRequest, completion: @escaping (Result<LoginResponse, Error>) -> Void) {
-        guard let url = URL(string: APIConstants.baseURL + APIConstants.Endpoint.login) else {
+    func register(user: RegisterRequest, completion: @escaping (Result<RegisterResponse, Error>) -> Void) {
+        guard let url = URL(string: APIConstants.baseURL + APIConstants.Endpoint.register) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0)))
             return
         }
         
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
-        urlRequest.applyDefaultHeaders()
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.applyDefaultHeaders()
         
         do {
-            urlRequest.httpBody = try JSONEncoder().encode(request)
+            request.httpBody = try encoder.encode(user)
         } catch {
             completion(.failure(error))
             return
         }
         
-        session.dataTask(with: urlRequest) { data, response, error in
+        session.dataTask(with: request) { [weak self] data, _, error in
+            guard let self = self else { return }
+
             if let error = error {
                 completion(.failure(error))
                 return
@@ -45,18 +45,20 @@ final class LoginRepository: LoginRepositoryProtocol {
                 completion(.failure(NSError(domain: "No data", code: 0)))
                 return
             }
-                        
+            
             do {
-                let decoded = try JSONDecoder().decode(LoginResponse.self, from: data)
+                let decoded = try self.decoder.decode(RegisterResponse.self, from: data)
                 completion(.success(decoded))
             } catch {
-                if let apiError = try? JSONDecoder().decode(LoginAPIErrorResponse.self, from: data) {
+                if let apiError = try? self.decoder.decode(RegisterAPIErrorResponse.self, from: data) {
                     let customError = NSError(
                         domain: "API",
                         code: 400,
                         userInfo: [NSLocalizedDescriptionKey: apiError.error]
                     )
                     completion(.failure(customError))
+                } else {
+                    completion(.failure(error))
                 }
             }
         }.resume()
