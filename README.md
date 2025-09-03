@@ -48,3 +48,6 @@ GopeTalkie/
 ## 7. Testing
 - Framework used: **XCTest**
 - Strategy: Unit Tests, Integration Tests, UI Tests, E2E Tests
+
+## 8. GitHub Repository
+- github.com/Bootcamp-GPX/iOS_wt
