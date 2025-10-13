@@ -9,13 +9,13 @@ import XCTest
 @testable import GopeTalkie
 
 final class MockLoginInteractorOutput: LoginInteractorOutputProtocol {
-    var lastSuccessToken: LoginResponse?
+    var lastSuccessResponse: LoginResponse?
     var receivedError: Error?
     var onSuccess: (() -> Void)?
     var onFailure: (() -> Void)?
 
-    func loginSucceeded(with token: LoginResponse) {
-        lastSuccessToken = token
+    func loginSucceeded(with response: LoginResponse) {
+        lastSuccessResponse = response
         onSuccess?()
     }
 

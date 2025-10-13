@@ -9,13 +9,8 @@ import XCTest
 @testable import GopeTalkie
 
 final class MockChannelPresenter: ChannelInteractorOutputProtocol {
-    var logoutMessage: String?
     var fetchedEmails: [String]?
     var didDisconnectCalled = false
-    
-    func logoutSucceeded(message: String) {
-        logoutMessage = message
-    }
     
     func didFetchUsers(_ emails: [String]) {
         fetchedEmails = emails
