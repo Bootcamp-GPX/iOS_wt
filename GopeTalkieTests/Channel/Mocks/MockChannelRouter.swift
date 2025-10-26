@@ -9,6 +9,14 @@ import XCTest
 @testable import GopeTalkie
 
 final class MockChannelRouter: ChannelRouterProtocol {
+    var navigateToListUsersCalled = false
+    var listUsersChannelName: String?
+
+    func navigateToListUsers(from view: any GopeTalkie.ChannelViewProtocol, with channelName: String) {
+        navigateToListUsersCalled = true
+        listUsersChannelName = channelName
+    }
+    
     var presentModalCalled = false
     var navigateToSettingsCalled = false
     var navigateToChannelPrivateCreateCalled = false
